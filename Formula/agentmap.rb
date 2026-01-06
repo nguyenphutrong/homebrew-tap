@@ -1,17 +1,17 @@
 class Agentmap < Formula
   desc "Prepare codebases for AI agents with structured documentation"
   homepage "https://github.com/nguyenphutrong/agentmap"
-  version "0.3.0"
+  version "0.4.0"
   license "MIT"
 
   on_macos do
     on_arm do
       url "https://github.com/nguyenphutrong/agentmap/releases/download/v#{version}/agentmap-darwin-aarch64.tar.gz"
-      sha256 "320a1419e5f6ad99781cd58f0af2ffae0acbeb2be8553f45553bb5e411cc0dea"
+      sha256 "16f3384e029308e455204d51c4d237e1adc2c5ef06c0002b442a387b2920e923"
     end
     on_intel do
       url "https://github.com/nguyenphutrong/agentmap/releases/download/v#{version}/agentmap-darwin-x86_64.tar.gz"
-      sha256 "b5239156faf4142459eb6f7c0d446ccf07530666a6cc09ecf3195130e6587ff0"
+      sha256 "2573f4c75071f25c2bfcfbe17da1c532fc16da10da0a75f7f11668ff42882864"
     end
   end
 
