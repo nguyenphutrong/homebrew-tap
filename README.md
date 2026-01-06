@@ -10,7 +10,7 @@ brew tap nguyenphutrong/tap
 
 ## Available Packages
 
-### Quotio (Cask) - v0.6.0
+### Quotio (Cask)
 
 Command center for AI coding assistants on macOS.
 
@@ -18,7 +18,7 @@ Command center for AI coding assistants on macOS.
 brew install --cask quotio
 ```
 
-### Agentmap (Formula) - v0.3.0
+### Agentmap (Formula)
 
 Prepare codebases for AI agents with structured documentation.
 
@@ -37,24 +37,6 @@ brew uninstall agentmap
 
 # Remove tap
 brew untap nguyenphutrong/tap
-```
-
-## Development
-
-### Testing locally
-
-```bash
-# Test cask
-brew install --cask ./Casks/quotio.rb
-
-# Test formula
-brew install ./Formula/agentmap.rb
-
-# Audit cask
-brew audit --cask quotio
-
-# Audit formula
-brew audit agentmap
 ```
 
 ## License

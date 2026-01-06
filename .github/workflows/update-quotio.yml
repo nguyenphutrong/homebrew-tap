@@ -1,0 +1,66 @@
+name: Update Quotio Cask
+
+on:
+  repository_dispatch:
+    types: [quotio-release]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to update (e.g., 0.7.0)'
+        required: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ github.event.client_payload.version }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Download and get SHA256
+        id: sha256
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          URL="https://github.com/nguyenphutrong/quotio/releases/download/v${VERSION}/Quotio-${VERSION}.dmg"
+          SHA256=$(curl -sL "$URL" | shasum -a 256 | cut -d' ' -f1)
+          echo "sha256=$SHA256" >> $GITHUB_OUTPUT
+
+      - name: Update Cask
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          SHA256="${{ steps.sha256.outputs.sha256 }}"
+          
+          cat > Casks/quotio.rb << CASK
+          cask "quotio" do
+            version "${VERSION}"
+            sha256 "${SHA256}"
+
+            url "https://github.com/nguyenphutrong/quotio/releases/download/v#{version}/Quotio-#{version}.dmg"
+            name "Quotio"
+            desc "Command center for AI coding assistants on macOS"
+            homepage "https://github.com/nguyenphutrong/quotio"
+
+            app "Quotio.app"
+
+            zap trash: [
+              "~/Library/Application Support/Quotio",
+              "~/Library/Caches/Quotio",
+              "~/Library/Preferences/com.nguyenphutrong.quotio.plist",
+            ]
+          end
+          CASK
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Casks/quotio.rb
+          git commit -m "chore: update quotio to v${{ steps.version.outputs.version }}"
+          git push
