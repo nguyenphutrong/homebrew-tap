@@ -20,14 +20,14 @@ Command center for AI coding assistants on macOS.
 brew install --cask quotio
 ```
 
-### Agentmap (Formula)
+### Agentlens (Formula)
 
 Prepare codebases for AI agents with structured documentation.
 
-- **GitHub**: https://github.com/nguyenphutrong/agentmap
+- **GitHub**: https://github.com/nguyenphutrong/agentlens
 
 ```bash
-brew install agentmap
+brew install agentlens
 ```
 
 ## Uninstallation
@@ -36,8 +36,8 @@ brew install agentmap
 # Remove quotio
 brew uninstall --cask quotio
 
-# Remove agentmap
-brew uninstall agentmap
+# Remove agentlens
+brew uninstall agentlens
 
 # Remove tap
 brew untap nguyenphutrong/tap
