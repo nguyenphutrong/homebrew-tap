@@ -7,6 +7,8 @@ cask "quotio" do
   desc "Command center for AI coding assistants on macOS"
   homepage "https://github.com/nguyenphutrong/quotio"
 
+  auto_updates true
+
   app "Quotio.app"
 
   zap trash: [

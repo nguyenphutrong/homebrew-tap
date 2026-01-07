@@ -14,6 +14,8 @@ brew tap nguyenphutrong/tap
 
 Command center for AI coding assistants on macOS.
 
+- **GitHub**: https://github.com/nguyenphutrong/quotio
+
 ```bash
 brew install --cask quotio
 ```
@@ -21,6 +23,8 @@ brew install --cask quotio
 ### Agentmap (Formula)
 
 Prepare codebases for AI agents with structured documentation.
+
+- **GitHub**: https://github.com/nguyenphutrong/agentmap
 
 ```bash
 brew install agentmap
