@@ -21,10 +21,13 @@ jobs:
         id: version
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+            VERSION="${{ github.event.inputs.version }}"
           else
-            echo "version=${{ github.event.client_payload.version }}" >> $GITHUB_OUTPUT
+            VERSION="${{ github.event.client_payload.version }}"
           fi
+          # Strip "v" prefix if present
+          VERSION="${VERSION#v}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Get SHA256 checksums
         id: sha256
@@ -35,6 +38,16 @@ jobs:
           SHA256_AARCH64=$(curl -sL "${BASE_URL}/agentmap-darwin-aarch64.tar.gz.sha256" | cut -d' ' -f1)
           SHA256_X86_64=$(curl -sL "${BASE_URL}/agentmap-darwin-x86_64.tar.gz.sha256" | cut -d' ' -f1)
           
+          # Validate SHA256 format (64 hex characters)
+          if ! echo "$SHA256_AARCH64" | grep -qE '^[a-f0-9]{64}$'; then
+            echo "::error::Invalid SHA256 for aarch64: $SHA256_AARCH64"
+            exit 1
+          fi
+          if ! echo "$SHA256_X86_64" | grep -qE '^[a-f0-9]{64}$'; then
+            echo "::error::Invalid SHA256 for x86_64: $SHA256_X86_64"
+            exit 1
+          fi
+          
           echo "sha256_aarch64=$SHA256_AARCH64" >> $GITHUB_OUTPUT
           echo "sha256_x86_64=$SHA256_X86_64" >> $GITHUB_OUTPUT
 
@@ -44,33 +57,38 @@ jobs:
           SHA256_AARCH64="${{ steps.sha256.outputs.sha256_aarch64 }}"
           SHA256_X86_64="${{ steps.sha256.outputs.sha256_x86_64 }}"
           
-          cat > Formula/agentmap.rb << FORMULA
-          class Agentmap < Formula
-            desc "Prepare codebases for AI agents with structured documentation"
-            homepage "https://github.com/nguyenphutrong/agentmap"
-            version "${VERSION}"
-            license "MIT"
+          cat > Formula/agentmap.rb << 'EOF'
+class Agentmap < Formula
+  desc "Prepare codebases for AI agents with structured documentation"
+  homepage "https://github.com/nguyenphutrong/agentmap"
+  version "VERSION_PLACEHOLDER"
+  license "MIT"
 
-            on_macos do
-              on_arm do
-                url "https://github.com/nguyenphutrong/agentmap/releases/download/v#{version}/agentmap-darwin-aarch64.tar.gz"
-                sha256 "${SHA256_AARCH64}"
-              end
-              on_intel do
-                url "https://github.com/nguyenphutrong/agentmap/releases/download/v#{version}/agentmap-darwin-x86_64.tar.gz"
-                sha256 "${SHA256_X86_64}"
-              end
-            end
+  on_macos do
+    on_arm do
+      url "https://github.com/nguyenphutrong/agentmap/releases/download/v#{version}/agentmap-darwin-aarch64.tar.gz"
+      sha256 "SHA256_AARCH64_PLACEHOLDER"
+    end
+    on_intel do
+      url "https://github.com/nguyenphutrong/agentmap/releases/download/v#{version}/agentmap-darwin-x86_64.tar.gz"
+      sha256 "SHA256_X86_64_PLACEHOLDER"
+    end
+  end
 
-            def install
-              bin.install "agentmap"
-            end
+  def install
+    bin.install "agentmap"
+  end
 
-            test do
-              assert_match version.to_s, shell_output("#{bin}/agentmap --version")
-            end
-          end
-          FORMULA
+  test do
+    assert_match version.to_s, shell_output("#{bin}/agentmap --version")
+  end
+end
+EOF
+          
+          # Replace placeholders
+          sed -i "s/VERSION_PLACEHOLDER/$VERSION/" Formula/agentmap.rb
+          sed -i "s/SHA256_AARCH64_PLACEHOLDER/$SHA256_AARCH64/" Formula/agentmap.rb
+          sed -i "s/SHA256_X86_64_PLACEHOLDER/$SHA256_X86_64/" Formula/agentmap.rb
 
       - name: Commit and push
         run: |
