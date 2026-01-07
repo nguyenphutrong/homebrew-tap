@@ -1,8 +1,8 @@
-name: Update Agentmap Formula
+name: Update Agentlens Formula
 
 on:
   repository_dispatch:
-    types: [agentmap-release]
+    types: [agentlens-release]
   workflow_dispatch:
     inputs:
       version:
@@ -35,8 +35,8 @@ jobs:
           VERSION="${{ steps.version.outputs.version }}"
           BASE_URL="https://github.com/nguyenphutrong/agentlens/releases/download/v${VERSION}"
           
-          SHA256_AARCH64=$(curl -sL "${BASE_URL}/agentmap-darwin-aarch64.tar.gz.sha256" | cut -d' ' -f1)
-          SHA256_X86_64=$(curl -sL "${BASE_URL}/agentmap-darwin-x86_64.tar.gz.sha256" | cut -d' ' -f1)
+          SHA256_AARCH64=$(curl -sL "${BASE_URL}/agentlens-darwin-aarch64.tar.gz.sha256" | cut -d' ' -f1)
+          SHA256_X86_64=$(curl -sL "${BASE_URL}/agentlens-darwin-x86_64.tar.gz.sha256" | cut -d' ' -f1)
           
           # Validate SHA256 format (64 hex characters)
           if ! echo "$SHA256_AARCH64" | grep -qE '^[a-f0-9]{64}$'; then
@@ -57,8 +57,8 @@ jobs:
           SHA256_AARCH64="${{ steps.sha256.outputs.sha256_aarch64 }}"
           SHA256_X86_64="${{ steps.sha256.outputs.sha256_x86_64 }}"
           
-          cat > Formula/agentmap.rb << FORMULA_EOF
-          class Agentmap < Formula
+          cat > Formula/agentlens.rb << FORMULA_EOF
+          class Agentlens < Formula
             desc "Prepare codebases for AI agents with structured documentation"
             homepage "https://github.com/nguyenphutrong/agentlens"
             version "${VERSION}"
@@ -66,32 +66,32 @@ jobs:
 
             on_macos do
               on_arm do
-                url "https://github.com/nguyenphutrong/agentlens/releases/download/v#{version}/agentmap-darwin-aarch64.tar.gz"
+                url "https://github.com/nguyenphutrong/agentlens/releases/download/v#{version}/agentlens-darwin-aarch64.tar.gz"
                 sha256 "${SHA256_AARCH64}"
               end
               on_intel do
-                url "https://github.com/nguyenphutrong/agentlens/releases/download/v#{version}/agentmap-darwin-x86_64.tar.gz"
+                url "https://github.com/nguyenphutrong/agentlens/releases/download/v#{version}/agentlens-darwin-x86_64.tar.gz"
                 sha256 "${SHA256_X86_64}"
               end
             end
 
             def install
-              bin.install "agentmap"
+              bin.install "agentlens"
             end
 
             test do
-              assert_match version.to_s, shell_output("#{bin}/agentmap --version")
+              assert_match version.to_s, shell_output("#{bin}/agentlens --version")
             end
           end
           FORMULA_EOF
           
           # Remove leading indentation (10 spaces) from the formula
-          sed -i 's/^          //' Formula/agentmap.rb
+          sed -i 's/^          //' Formula/agentlens.rb
 
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add Formula/agentmap.rb
-          git commit -m "chore: update agentmap to v${{ steps.version.outputs.version }}"
+          git add Formula/agentlens.rb
+          git commit -m "chore: update agentlens to v${{ steps.version.outputs.version }}"
           git push
