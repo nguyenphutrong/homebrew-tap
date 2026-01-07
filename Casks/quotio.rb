@@ -11,9 +11,20 @@ cask "quotio" do
 
   app "Quotio.app"
 
+  postflight do
+    # Informative message for users during installation
+    puts "Run `xattr -cr /Applications/Quotio.app` for the APP, see more details in https://github.com/nguyenphutrong/quotio/blob/master/README.md#download."
+
+    system_command "/usr/bin/xattr", args: ["-cr", "#{appdir}/Quotio.app"], sudo: false
+  end
+
   zap trash: [
     "~/Library/Application Support/Quotio",
-    "~/Library/Caches/Quotio",
-    "~/Library/Preferences/com.nguyenphutrong.quotio.plist",
+    "~/Library/Caches/proseek.io.vn.Quotio",
+    "~/Library/Containers/proseek.io.vn.Quotio",
+    "~/Library/HTTPStorages/proseek.io.vn.Quotio",
+    "~/Library/HTTPStorages/proseek.io.vn.Quotio.binarycookies",
+    "~/Library/Preferences/group.proseek.io.vn.Quotio.plist",
+    "~/Library/Preferences/proseek.io.vn.Quotio.plist",
   ]
 end
