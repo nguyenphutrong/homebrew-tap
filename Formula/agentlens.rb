@@ -1,17 +1,17 @@
 class Agentlens < Formula
   desc "Prepare codebases for AI agents with structured documentation"
   homepage "https://github.com/nguyenphutrong/agentlens"
-  version "0.5.0"
+  version "0.6.0"
   license "MIT"
 
   on_macos do
     on_arm do
       url "https://github.com/nguyenphutrong/agentlens/releases/download/v#{version}/agentlens-darwin-aarch64.tar.gz"
-      sha256 "4591cff2d23949be27e594b4ff54d4e94edb84175d9ec1fa0e5c8ec74f91988e"
+      sha256 "73b8341de259c2d6b8eb017aea4a586c5a81b675433503d5d5d1233b03b8d4b5"
     end
     on_intel do
       url "https://github.com/nguyenphutrong/agentlens/releases/download/v#{version}/agentlens-darwin-x86_64.tar.gz"
-      sha256 "93f979d1614f58d66247bb8c0edc43e7971fe898b099e078cee22913c89da483"
+      sha256 "c38b4a9c2650b5ee60738203b301495894aeedaa3933a883bd124365318ce499"
     end
   end
 
