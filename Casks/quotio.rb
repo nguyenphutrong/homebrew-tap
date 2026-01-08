@@ -1,30 +1,17 @@
 cask "quotio" do
-  version "0.6.0"
-  sha256 "c9645909db45a13fdd7d9cd4f97d0efe0bb77e2d5264a031b6651cc8b1ed4179"
+  version "0.6.1"
+  sha256 "5a22297dcbb874e780f5d814b925df1980779f409a89dac1eca31f1131d4190f"
 
   url "https://github.com/nguyenphutrong/quotio/releases/download/v#{version}/Quotio-#{version}.dmg"
   name "Quotio"
   desc "Command center for AI coding assistants on macOS"
   homepage "https://github.com/nguyenphutrong/quotio"
 
-  auto_updates true
-
   app "Quotio.app"
-
-  postflight do
-    # Informative message for users during installation
-    puts "Run `xattr -cr /Applications/Quotio.app` for the APP, see more details in https://github.com/nguyenphutrong/quotio/blob/master/README.md#download."
-
-    system_command "/usr/bin/xattr", args: ["-cr", "#{appdir}/Quotio.app"], sudo: false
-  end
 
   zap trash: [
     "~/Library/Application Support/Quotio",
-    "~/Library/Caches/proseek.io.vn.Quotio",
-    "~/Library/Containers/proseek.io.vn.Quotio",
-    "~/Library/HTTPStorages/proseek.io.vn.Quotio",
-    "~/Library/HTTPStorages/proseek.io.vn.Quotio.binarycookies",
-    "~/Library/Preferences/group.proseek.io.vn.Quotio.plist",
-    "~/Library/Preferences/proseek.io.vn.Quotio.plist",
+    "~/Library/Caches/Quotio",
+    "~/Library/Preferences/com.nguyenphutrong.quotio.plist",
   ]
 end
