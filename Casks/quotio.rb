@@ -1,6 +1,6 @@
 cask "quotio" do
-  version "0.16.0"
-  sha256 "3485e9acce29584d02f9cf6b198a2afe08577ed4888e532dfcaa255bde4ec18d"
+  version "0.16.1"
+  sha256 "72bdd7cc3566742053a0c0a0917440b12dce1a6e2e6debb5a1f2a5cd16906d45"
 
   url "https://github.com/nguyenphutrong/quotio/releases/download/v#{version}/Quotio-#{version}.dmg"
   name "Quotio"
