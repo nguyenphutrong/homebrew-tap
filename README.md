@@ -20,6 +20,16 @@ Command center for AI coding assistants on macOS.
 brew install --cask quotio
 ```
 
+### cpa-plusplus (Formula)
+
+OpenAI/Gemini/Claude/Codex compatible API proxy with OAuth and round-robin load balancing.
+
+- **GitHub**: https://github.com/nguyenphutrong/cpa-plusplus
+
+```bash
+brew install cpa-plusplus
+```
+
 ### Agentlens (Formula)
 
 Prepare codebases for AI agents with structured documentation.
