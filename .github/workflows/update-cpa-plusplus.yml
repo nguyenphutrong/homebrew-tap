@@ -105,8 +105,20 @@ jobs:
 
             def install
               bin.install "cpa-plusplus"
-              (etc/"cpa-plusplus").install "config.example.yaml" => "config.yaml"
-              pkgshare.install "config.example.yaml"
+              pkgshare.install "config.example.yaml" if (buildpath/"config.example.yaml").exist?
+
+              unless (etc/"cpa-plusplus/config.yaml").exist?
+                if (pkgshare/"config.example.yaml").exist?
+                  (etc/"cpa-plusplus").install pkgshare/"config.example.yaml" => "config.yaml"
+                else
+                  (etc/"cpa-plusplus/config.yaml").write <<~YAML
+                    host: "127.0.0.1"
+                    port: 8317
+                    auth-dir: "~/.cli-proxy-api"
+                  YAML
+                end
+              end
+
               doc.install "README.md", "LICENSE"
             end
 
