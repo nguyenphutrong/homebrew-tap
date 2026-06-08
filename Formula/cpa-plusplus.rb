@@ -30,8 +30,17 @@ class CpaPlusplus < Formula
 
   def install
     bin.install "cpa-plusplus"
+    (etc/"cpa-plusplus").install "config.example.yaml" => "config.yaml"
     pkgshare.install "config.example.yaml"
     doc.install "README.md", "LICENSE"
+  end
+
+  service do
+    run [opt_bin/"cpa-plusplus", "--config", etc/"cpa-plusplus/config.yaml"]
+    keep_alive true
+    working_dir var/"cpa-plusplus"
+    log_path var/"log/cpa-plusplus/cpa-plusplus.log"
+    error_log_path var/"log/cpa-plusplus/cpa-plusplus.err.log"
   end
 
   test do
