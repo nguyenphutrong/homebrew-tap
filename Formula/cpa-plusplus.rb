@@ -1,7 +1,7 @@
 class CpaPlusplus < Formula
   desc "OpenAI/Gemini/Claude/Codex compatible API proxy"
   homepage "https://github.com/nguyenphutrong/cpa-plusplus"
-  version "7.1.62-plus.3"
+  version "7.1.64-plus.1"
   license "MIT"
 
   depends_on "git" => :optional
@@ -9,22 +9,22 @@ class CpaPlusplus < Formula
   on_macos do
     on_arm do
       url "https://github.com/nguyenphutrong/cpa-plusplus/releases/download/v#{version}/cpa-plusplus_#{version}_darwin_aarch64.tar.gz"
-      sha256 "90c2036b506fa3fc6ba4016d61396bf3d2373cd700816affb99d0ab03593d49a"
+      sha256 "34b57335d14d92afb1f17906279132d99a99d6158294b98a71aff562feec36c0"
     end
     on_intel do
       url "https://github.com/nguyenphutrong/cpa-plusplus/releases/download/v#{version}/cpa-plusplus_#{version}_darwin_amd64.tar.gz"
-      sha256 "bbbc76b7a8b3040032baea3178092e5837bd0f1fd9900a5696aa0b296ad1977a"
+      sha256 "ce7063ba587910e732644dc074e25447489c9bd41b206a6a19f468006f759f77"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/nguyenphutrong/cpa-plusplus/releases/download/v#{version}/cpa-plusplus_#{version}_linux_aarch64.tar.gz"
-      sha256 "08cc32266757174b4f76bbe88707e05dc6d5ba7762c84a00fa38a8463ff7f101"
+      sha256 "b2b48bef2e1bb0aebd3198dbbace1f772589063ffb837c81ef7d3324f0b50766"
     end
     on_intel do
       url "https://github.com/nguyenphutrong/cpa-plusplus/releases/download/v#{version}/cpa-plusplus_#{version}_linux_amd64.tar.gz"
-      sha256 "7f792daebcc2064f019a051113298be3c4dc6c6198599832c8f9b882691d1b3d"
+      sha256 "9100acbe28f1aece93ec9073a2f35ae8fd3d5c91cec56c10f1a970c49b6d4bf6"
     end
   end
 
