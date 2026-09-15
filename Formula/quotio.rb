@@ -1,22 +1,22 @@
 class Quotio < Formula
   desc "Check AI provider quota and usage"
-  homepage "https://github.com/nguyenphutrong/quotio-cli"
-  version "0.2.11"
+  homepage "https://github.com/nguyenphutrong/quotio"
+  version "0.2.12"
   license "MIT"
   on_macos do
     on_arm do
-      url "https://github.com/nguyenphutrong/quotio-cli/releases/download/v0.2.11/quotio-0.2.11-aarch64-apple-darwin.tar.gz"
-      sha256 "1cfd6987d1b7c6df5cfa0b0bed9c562750bddd85d0cc44694d80ffa570cc4a05"
+      url "https://github.com/nguyenphutrong/quotio/releases/download/cli-v0.2.12/quotio-0.2.12-aarch64-apple-darwin.tar.gz"
+      sha256 "8e170296a40777709a14b10956e5ccee4002b68338142a44a475692b881b052b"
     end
     on_intel do
-      url "https://github.com/nguyenphutrong/quotio-cli/releases/download/v0.2.11/quotio-0.2.11-x86_64-apple-darwin.tar.gz"
-      sha256 "1d8801b0194ca5f4c9d4bda9528b8e618a0536ba026379804a71ab0d013495b4"
+      url "https://github.com/nguyenphutrong/quotio/releases/download/cli-v0.2.12/quotio-0.2.12-x86_64-apple-darwin.tar.gz"
+      sha256 "2db4753218342bd3ea9b95738c47776a30a74c55c22e9b9c820f9d2f7a50cb35"
     end
   end
   on_linux do
     depends_on arch: :x86_64
-    url "https://github.com/nguyenphutrong/quotio-cli/releases/download/v0.2.11/quotio-0.2.11-x86_64-unknown-linux-gnu.tar.gz"
-    sha256 "6ccd3e7e7d9b8894b1fcbfbe221c5c5c4e53ab31ea690c198c5963c83ce51c7c"
+    url "https://github.com/nguyenphutrong/quotio/releases/download/cli-v0.2.12/quotio-0.2.12-x86_64-unknown-linux-gnu.tar.gz"
+    sha256 "9646e29071da93f5e321a80e242a0c8a8be4d8d3ce039c09fde00619e8a0a0f3"
   end
 
   def install
@@ -25,7 +25,7 @@ class Quotio < Formula
   end
 
   test do
-    assert_match "quotio 0.2.11", shell_output("#{bin}/quotio --version")
+    assert_match "quotio 0.2.12", shell_output("#{bin}/quotio --version")
     assert_match "schema_version", shell_output("#{bin}/quotio usage --provider mock --no-saved-accounts --format json")
   end
 end
